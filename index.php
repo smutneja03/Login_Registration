@@ -1,3 +1,24 @@
+<?php
+  //Sessions use cookies which use header.
+  //Must start before any HTML output
+  //unless output buffereing is turned on
+  //Session file resides on the server, rather than the header like cookies
+  session_start();  
+  //setcookie($name, $value, $expire); setting the cookie
+  //setcookie($name, null, time()- 3600); unsetting the cookie
+
+  if(isset($_POST['submit'])){
+    //form was submitted, saving the email and password
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+  }
+  else{
+    //get request sent to the login page 
+    $email = "";
+    $message = "*Kindly Login with proper Credentials";
+  }
+?>
+
 <!DOCTYPE html>
   <html lang="en">
     <head>
@@ -31,30 +52,33 @@
         <div class="row">
           <div class="span8">
 
-            <form class="form-horizontal" id="loginHere" method='post' action='user_login.php'>
+            <form class="form-horizontal" id="loginHere" method='post' action='index.php'>
             <fieldset>
 
               <legend><a href="index.php">Login</a>/<a href="register.php">Registration</a></legend>
               
+              <?php echo $message; ?>
+              
               <div class="control-group ">
                 <label class="control-label">Email</label>
                 <div class="controls">
-                  <input type="text" class="input-xlarge" id="email" name="email" >
+                  <input type="text" class="input-xlarge" id="email" name="email" value=
+                  <?php echo htmlspecialchars($email); ?> >
                 </div>
               </div>
 
               <div class="control-group ">
                 <label class="control-label">Password</label>
                 <div class="controls">
-                  <input type="password" class="input-xlarge" id="pwd" name="pwd" >
+                  <input type="password" class="input-xlarge" id="pwd" name="pwd">
                 </div>
               </div>
 
               <div class="control-group">
                 <label class="control-label"></label>
                 <div class="controls">
-                  <button type="submit" class="btn btn-success">Submit</button>
-                  <button type="submit" class="btn btn-success" onclick="document.getElementById('loginHere').reset();">Reset</button>
+                  <input class="btn btn-success" name = "submit" type="submit" value="Submit">
+                  <button type="submit" name = "reset" class="btn btn-success" onclick="document.getElementById('loginHere').reset();">Reset</button>
 
                 </div>
               </div>

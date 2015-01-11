@@ -23,10 +23,8 @@ $(document).ready(function(){
 	      	
 	      	first_name:{required:true, NameCheck:true},
 	      	last_name:{required:true, NameCheck:true},
-	      	mobile:{required:true, number: true, minlength:10, maxlength:10},
-          designation:{required:true},
 	      	email:{required:true,email: true},
-	      	pwd:{required:true, minlength: 8, StrongPassword: true},
+	      	pwd:{required:true, minlength: 6},
 	      	cpwd:{required:true, equalTo: "#pwd"},
 
     	},
@@ -41,19 +39,13 @@ $(document).ready(function(){
             required:"Enter your last name",
             NameCheck:"Enter only characters"
           },
-      		mobile:{
-      			required:"Enter your mobile number",
-      			number: "Enter a valid number",
-      		},
-      		
       		email:{
       			required:"Enter your email address",
       			email:"Enter valid email address"
       		},
       		pwd:{
       			required:"Enter your password",
-      			minlength:"Password must be minimum 8 characters",
-      			StrongPassword: "Your password must contain at least one special character, one number, one lower case and one upper case character"
+      			minlength:"Password must be minimum 6 characters",
       		},
       		cpwd:{
       			required:"Enter confirm password",
@@ -81,7 +73,7 @@ $(document).ready(function(){
           
           
           email:{required:true,email: true},
-          pwd:{required:true, minlength: 8, StrongPassword: true},
+          pwd:{required:true, minlength: 8},
           
       },
 
