@@ -6,14 +6,42 @@
   session_start();  
   //setcookie($name, $value, $expire); setting the cookie
   //setcookie($name, null, time()- 3600); unsetting the cookie
-
+  
+  // 1. Create a database connection
+  include "base.php";
+  
   if(isset($_POST['submit'])){
     //form was submitted, saving the email and password
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+    $email = mysql_real_escape_string($_POST['email']);
+    $password = mysql_real_escape_string($_POST['pwd']);
+    // 2. Perform database query
+    $query = "Select * from users where email='{$email}' 
+              and pwd = '{$password}' ";
+
+    $result = mysql_query($query);
+    //Test if there is a query error
+    if(!$result){
+      $message = "*Database query failed";
+    }
+    else{
+      $results = mysql_num_rows();
+      if($results != 1){
+        $message = "*Credentials Not matched";
+      }
+      else{
+        //row containing the user data has been fetched
+        //will be saved in the session variables and passed
+        $user = mysql_fetch_assoc($result);
+        //saving the data in session variables
+        $_SESSION['username'] = $user['first_name']. " ". $user['last_name'];
+        $_SESSION['email'] = $user['email'];
+        $_SESSION['logged_in'] = 1;
+      }
+    }
   }
+
   else{
-    //get request sent to the login page 
+    //index page is repeatedly refreshed
     $email = "";
     $message = "*Kindly Login with proper Credentials";
   }
@@ -90,4 +118,3 @@
       </div>
     </body>
   </html>
-

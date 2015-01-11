@@ -5,14 +5,32 @@
   //Session file resides on the server, rather than the header like cookies
   session_start(); 
   //setcookie($name, $value, $expire); setting the cookie
-  //setcookie($name, null, time()- 3600); unsetting the cookie 
+  //setcookie($name, null, time()- 3600); unsetting the cookie
+  
+  // 1. Create a database connection
+  include "base.php";
+
   if(isset($_POST['submit'])){
     //form was submitted, saving the email and password
-    $first_name = $_POST['first_name'];  
-    $last_name = $_POST['last_name'];
-    $email = $_POST['email'];
-    $password = md5($_POST['pwd']);
+    $first_name = mysql_real_escape_string($_POST['first_name']);  
+    $last_name = mysql_real_escape_string($_POST['last_name']);
+    $email = mysql_real_escape_string($_POST['email']);
     //the confirm pasword is checked via jQuery
+    $password = md5(mysql_real_escape_string($_POST['pwd']));
+    //2. Perform Database query
+    $query = "Insert into users (first_name, last_name, email, pwd) values
+              ('{$first_name}', '{$last_name}', '{$email}', '{password}') ";
+
+    $result = mysql_query($query);
+
+    if($result){
+      //Success
+      // redirect_t("somepage.php")
+    } 
+    else{
+      //Failure
+      $message = "*User Registration Failed";
+    }
 
   }
   else{
@@ -116,3 +134,7 @@
     </body>
   </html>
 
+<?php
+  //5. Close Database Connection
+  mysqli_close($connection);
+?>
