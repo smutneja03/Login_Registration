@@ -73,7 +73,7 @@ $(document).ready(function(){
           
           
           email:{required:true,email: true},
-          pwd:{required:true, minlength: 8},
+          pwd:{required:true, minlength: 6},
           
       },
 
