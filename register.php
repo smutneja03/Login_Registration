@@ -18,22 +18,31 @@
     //the confirm pasword is checked via jQuery
     $password = password_encrypt($_POST['pwd']);
     //2. Perform Database query
-    $query = "Insert into users (first_name, last_name, email, pwd) values
-              ('{$first_name}', '{$last_name}', '{$email}', '{$password}') ";
+    $email_available = check_presence($email);
+    
+    if(!$email_available){
+        
+        $query = "Insert into users (first_name, last_name, email, pwd) values
+                ('{$first_name}', '{$last_name}', '{$email}', '{$password}') ";
 
-    $result = mysql_query($query);
+        $result = mysql_query($query);
 
-    if($result){
-      //Success
-      $_SESSION['username'] = $first_name. " ". $last_name;
-      $_SESSION['email'] = $email;
-      $_SESSION['logged_in'] = 1;      
-      redirect_to("user/index.php");
-    } 
+        if($result){
+        //Success
+          $_SESSION['username'] = $first_name. " ". $last_name;
+          $_SESSION['email'] = $email;
+          $_SESSION['logged_in'] = 1;      
+          redirect_to("user/index.php");
+        } 
+        else{
+          //Failure
+          $message = "*User Registration Failed";
+          //Same register page will be loaded again
+        }
+    }
+
     else{
-      //Failure
-      $message = "*User Registration Failed";
-      //Same register page will be loaded again
+      $message = "*E-Mail entered is not available";
     }
   }
   
