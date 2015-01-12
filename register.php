@@ -6,7 +6,7 @@
   session_start(); 
   //setcookie($name, $value, $expire); setting the cookie
   //setcookie($name, null, time()- 3600); unsetting the cookie
-  
+  include "functions.php";
   // 1. Create a database connection
   include "base.php";
 
@@ -16,23 +16,27 @@
     $last_name = mysql_real_escape_string($_POST['last_name']);
     $email = mysql_real_escape_string($_POST['email']);
     //the confirm pasword is checked via jQuery
-    $password = md5(mysql_real_escape_string($_POST['pwd']));
+    $password = password_encrypt($_POST['pwd']);
     //2. Perform Database query
     $query = "Insert into users (first_name, last_name, email, pwd) values
-              ('{$first_name}', '{$last_name}', '{$email}', '{password}') ";
+              ('{$first_name}', '{$last_name}', '{$email}', '{$password}') ";
 
     $result = mysql_query($query);
 
     if($result){
       //Success
-      // redirect_t("somepage.php")
+      $_SESSION['username'] = $first_name. " ". $last_name;
+      $_SESSION['email'] = $email;
+      $_SESSION['logged_in'] = 1;      
+      redirect_to("user/index.php");
     } 
     else{
       //Failure
       $message = "*User Registration Failed";
+      //Same register page will be loaded again
     }
-
   }
+  
   else{
     //get request sent to the login page 
     $first_name = "";

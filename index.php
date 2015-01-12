@@ -6,45 +6,38 @@
   session_start();  
   //setcookie($name, $value, $expire); setting the cookie
   //setcookie($name, null, time()- 3600); unsetting the cookie
-  
+  include "functions.php";
   // 1. Create a database connection
   include "base.php";
-  
+  $email = "";
   if(isset($_POST['submit'])){
     //form was submitted, saving the email and password
     $email = mysql_real_escape_string($_POST['email']);
-    $password = mysql_real_escape_string($_POST['pwd']);
+    $password = $_POST['pwd'];
     // 2. Perform database query
-    $query = "Select * from users where email='{$email}' 
-              and pwd = '{$password}' ";
-
-    $result = mysql_query($query);
+    $found_user = attempt_login($email, $password);
     //Test if there is a query error
-    if(!$result){
-      $message = "*Database query failed";
+    if($found_user){
+      //row containing the user data has been fetched
+      //will be saved in the session variables and passed
+      $_SESSION['id'] = $found_user['id'];//stores the unique id of the user
+      $_SESSION['username'] = $found_user['first_name']. " ". $found_user['last_name'];
+      $_SESSION['email'] = $found_user['email'];
+      $_SESSION['logged_in'] = 1;
+      redirect_to("user/index.php");
     }
     else{
-      $results = mysql_num_rows();
-      if($results != 1){
-        $message = "*Credentials Not matched";
-      }
-      else{
-        //row containing the user data has been fetched
-        //will be saved in the session variables and passed
-        $user = mysql_fetch_assoc($result);
-        //saving the data in session variables
-        $_SESSION['username'] = $user['first_name']. " ". $user['last_name'];
-        $_SESSION['email'] = $user['email'];
-        $_SESSION['logged_in'] = 1;
-      }
+      $message = "*Credentials did not match";
     }
   }
-
+  
   else{
     //index page is repeatedly refreshed
     $email = "";
     $message = "*Kindly Login with proper Credentials";
+    //redirect_to("user/index.php");
   }
+
 ?>
 
 <!DOCTYPE html>
@@ -91,7 +84,7 @@
                 <label class="control-label">Email</label>
                 <div class="controls">
                   <input type="text" class="input-xlarge" id="email" name="email" value=
-                  <?php echo htmlspecialchars($email); ?> >
+                  <?php echo htmlentities($email); ?> >
                 </div>
               </div>
 
