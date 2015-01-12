@@ -23,10 +23,10 @@
     <title>Home page</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="bootstrap.min.css" rel="stylesheet">
+    <link href="../style/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="wonder.css" rel="stylesheet">
+    <link href="../style/css/wonder.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -132,10 +132,10 @@
     <!-- /.container -->
 
     <!-- jQuery -->
-    <script src="jquery.js"></script>
+    <script src="../style/js/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="bootstrap.min.js"></script>
+    <script src="../style/js/bootstrap.min.js"></script>
 
 </body>
 

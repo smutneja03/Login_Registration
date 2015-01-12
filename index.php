@@ -46,11 +46,11 @@
       <meta charset="utf-8">
       <title>Login Form</title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <link href="assets/css/bootstrap.css" rel="stylesheet">
-      <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
-      <script src="javascript/jquery.js"></script>
-      <script type="text/javascript" src="javascript/jquery.validate.js"></script> 
-      <script type="text/javascript" src="javascript/validate.js"></script>
+      <link href="style/css/bootstrap.css" rel="stylesheet">
+      <link href="style/css/bootstrap-responsive.css" rel="stylesheet">
+      <script src="style/js/jquery.js"></script>
+      <script type="text/javascript" src="style/js/jquery.validate.js"></script> 
+      <script type="text/javascript" src="style/js/validate.js"></script>
       <style type="text/css">
 
         a{
