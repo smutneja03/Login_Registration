@@ -77,7 +77,16 @@
 		else{
 			return false;
 		}
+	}
 
+	function check_presence($email){
+		$user = find_user_by_email($email);
 
+		if($user){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 ?>
